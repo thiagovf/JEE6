@@ -2,7 +2,7 @@ package br.com.persistence;
 
 @javax.persistence.Entity
 @javax.persistence.NamedQuery(name = "findAllBooks", 
-		query = "SELECT b FROM BOOK b")
+		query = "SELECT b FROM Book b")
 public class Book {
 
 	@javax.persistence.Id
