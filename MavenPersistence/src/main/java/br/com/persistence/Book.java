@@ -13,7 +13,7 @@ public class Book {
 	private String title;
 	private Float price;
 
-	@javax.persistence.Column(length = 20)
+	@javax.persistence.Column(length = 200)
 	private String description;
 	private String isbn;
 	private Integer nbOfPage;
