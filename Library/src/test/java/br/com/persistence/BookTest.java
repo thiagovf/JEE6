@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -19,6 +20,8 @@ public class BookTest {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	private static EntityTransaction tx;
+	
+	private Book auxBook;
 
 	@BeforeClass
 	public static void initEntityManager() throws Exception {
@@ -35,6 +38,13 @@ public class BookTest {
 	@Before
 	public void initTransaction() {
 		tx = em.getTransaction();
+	}
+	
+	@After
+	public void removeObject() {
+		tx.begin();
+		em.remove(auxBook);
+		tx.commit();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -55,7 +65,10 @@ public class BookTest {
 		assertNotNull("ID should not be null", book.getId());
 		// Retrieves all the books from the database
 		List<Book> books = em.createNamedQuery("findAllBooks").getResultList();
+		auxBook = book;
 		assertEquals(1, books.size());
+		
+		
 	}
 
 }
