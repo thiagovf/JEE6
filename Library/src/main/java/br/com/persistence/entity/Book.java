@@ -1,4 +1,4 @@
-package br.com.persistence;
+package br.com.persistence.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,14 +6,20 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@javax.persistence.Entity
-@javax.persistence.NamedQuery(name = "findAllBooks", 
+@Entity
+@Table(name = "BOOK")
+@NamedQuery(name = "findAllBooks", 
 		query = "SELECT b FROM Book b")
 public class Book {
 
@@ -23,14 +29,22 @@ public class Book {
     @Column(name="ID")
 	private Long id;
 
-	@javax.persistence.Column(nullable = false)
+	@Column(name = "TITLE", nullable = false)
 	private String title;
 
-	@javax.persistence.Column(length = 200)
+	@Column(name = "DESCRIPTION", length = 200)
 	private String description;
+
+	@Column(name = "ISBN")
 	private String isbn;
+
+	@Column(name = "NUMBER_OF_PAGES")
 	private Integer nbOfPage;
+
+	@Column(name = "ILLUSTRATIONS")
 	private Boolean illustrations;
+
+	@Transient
 	private Boolean borrowed;
 
 	@ElementCollection(fetch = FetchType.LAZY)
@@ -38,6 +52,7 @@ public class Book {
 	@Column(name = "VALUE")
 	private List<String> tags = new ArrayList<String>();
 
+	@OneToMany (mappedBy = "book", fetch = FetchType.LAZY)
 	private List<Loan> loans = new ArrayList<Loan>();
 
 	@Override
@@ -135,6 +150,14 @@ public class Book {
 
 	public void setTags(List<String> tags) {
 		this.tags = tags;
+	}
+
+	public List<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
 	}
 
 }

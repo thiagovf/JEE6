@@ -16,6 +16,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.com.persistence.entity.Book;
+
 public class BookTest {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
